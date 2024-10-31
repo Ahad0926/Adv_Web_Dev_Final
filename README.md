@@ -4,8 +4,8 @@
 This project is an **Event Management System** enabling users to organize, manage, and attend events like concerts and conferences. The application supports ticket sales, attendee management, and calendar integration. The primary goals are to implement a modern, secure, and responsive web application, adhering to best practices in API design, authentication, deployment, and performance optimization.
 
 ### Group Members
-Ahad Abdul (100787992)
-Razeen Meera Ameer (100846286)
+- Ahad Abdul (100787992)
+- Razeen Meera Ameer (100846286)
 ---
 
 ## Technology Stack
