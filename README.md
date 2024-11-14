@@ -35,3 +35,9 @@ This project is an **Event Management System** enabling users to organize, manag
 
    - **Version Control**: **GitHub**
      - GitHub manages source code, collaboration, and CI/CD workflows, with commits and branches used for team development and progress tracking.
+    
+### How to Run the Project
+
+1. **Frontend**:  
+   Navigate to the `Event-Manager` directory and run the following command in your terminal:  
+   `ng serve`
