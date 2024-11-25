@@ -1,0 +1,127 @@
+<div class="container mx-auto px-4 py-6">
+  <h1 class="text-3xl font-bold text-blue-500 mb-6 text-center">Create Event</h1>
+  <form (ngSubmit)="onSubmit()" class="bg-white shadow-lg rounded-lg p-6">
+    <!-- Event Title -->
+    <div class="mb-4">
+      <label for="title" class="block text-sm font-medium">Event Title</label>
+      <input
+        id="title"
+        type="text"
+        [(ngModel)]="event.title"
+        name="title"
+        class="w-full px-3 py-2 border rounded-lg focus:outline-none"
+        required
+      />
+    </div>
+
+    <!-- Start Date and Time -->
+    <div class="mb-4">
+      <label for="start_date" class="block text-sm font-medium">Start Date</label>
+      <input
+        id="start_date"
+        type="date"
+        [(ngModel)]="event.start_date"
+        name="start_date"
+        class="w-full px-3 py-2 border rounded-lg focus:outline-none"
+        required
+      />
+    </div>
+    <div class="mb-4">
+      <label for="start_time" class="block text-sm font-medium">Start Time</label>
+      <select
+        id="start_time"
+        [(ngModel)]="event.start_time"
+        name="start_time"
+        (change)="updateEndTimeOptions()"
+        class="w-full px-3 py-2 border rounded-lg focus:outline-none"
+        required
+      >
+        <option *ngFor="let time of timeOptions" [value]="time">{{ time }}</option>
+      </select>
+    </div>
+
+    <!-- End Date and Time -->
+    <div class="mb-4">
+      <label for="end_date" class="block text-sm font-medium">End Date</label>
+      <input
+        id="end_date"
+        type="date"
+        [(ngModel)]="event.end_date"
+        name="end_date"
+        class="w-full px-3 py-2 border rounded-lg focus:outline-none"
+        required
+      />
+    </div>
+    <div class="mb-4">
+      <label for="end_time" class="block text-sm font-medium">End Time</label>
+      <select
+        id="end_time"
+        [(ngModel)]="event.end_time"
+        name="end_time"
+        class="w-full px-3 py-2 border rounded-lg focus:outline-none"
+        required
+      >
+        <option *ngFor="let time of filteredEndTimeOptions" [value]="time">{{ time }}</option>
+      </select>
+    </div>
+
+    <!-- Location -->
+    <div class="mb-4">
+      <label for="location" class="block text-sm font-medium">Location</label>
+      <input
+        id="location"
+        type="text"
+        [(ngModel)]="event.location"
+        name="location"
+        class="w-full px-3 py-2 border rounded-lg focus:outline-none"
+        required
+      />
+    </div>
+
+    <!-- Ticket Price -->
+    <div class="mb-4">
+      <label for="ticket_price" class="block text-sm font-medium">Ticket Price</label>
+      <input
+        id="ticket_price"
+        type="number"
+        step="0.01"
+        [(ngModel)]="event.ticket_price"
+        name="ticket_price"
+        class="w-full px-3 py-2 border rounded-lg focus:outline-none"
+        required
+      />
+    </div>
+
+    <!-- Total Tickets -->
+    <div class="mb-4">
+      <label for="total_tickets" class="block text-sm font-medium">Total Tickets</label>
+      <input
+        id="total_tickets"
+        type="number"
+        [(ngModel)]="event.total_tickets"
+        name="total_tickets"
+        class="w-full px-3 py-2 border rounded-lg focus:outline-none"
+        required
+      />
+    </div>
+
+    <!-- Description -->
+    <div class="mb-4">
+      <label for="description" class="block text-sm font-medium">Description</label>
+      <textarea
+        id="description"
+        [(ngModel)]="event.description"
+        name="description"
+        rows="4"
+        class="w-full px-3 py-2 border rounded-lg focus:outline-none"
+      ></textarea>
+    </div>
+
+    <button
+      type="submit"
+      class="px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+    >
+      Save Event
+    </button>
+  </form>
+</div>
