@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from flask_jwt_extended import JWTManager
 from flask_migrate import Migrate
@@ -7,6 +8,9 @@ from models.user_model import db, bcrypt
 from controllers.auth_controller import auth_bp
 
 app = Flask(__name__)
+
+# Enable CORS for all routes
+CORS(app)
 
 # Configure the app
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
