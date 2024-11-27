@@ -1,16 +1,47 @@
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-  <div *ngFor="let event of events" class="bg-white shadow-lg rounded-lg overflow-hidden">
-    <img [src]="event.image" alt="{{ event.title }}" class="w-full h-48 object-cover">
-    <div class="p-4">
-      <h2 class="text-xl font-semibold mb-2 text-gray-800">{{ event.title }}</h2>
-      <p class="text-gray-600 text-sm mb-2">{{ event.date }} | {{ event.location }}</p>
-      <p class="text-gray-700 text-sm">{{ event.description }}</p>
-      <a
-        [routerLink]="['/event', event.id]"
-        class="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 inline-block"
-      >
-        View Details
-      </a>
+<div class="animated-background"></div>
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+    <div 
+      *ngFor="let event of events" 
+      class="group bg-white bg-gradient-to-br from-white to-gray-50 shadow-xl rounded-xl overflow-hidden transition-all duration-300 ease-in-out hover:scale-[1.02] hover:shadow-2xl"
+    >
+      <div class="relative">
+        <img 
+          [src]="event.image" 
+          alt="{{ event.title }}" 
+          class="w-full h-56 object-cover transition-opacity duration-300"
+          [class.opacity-0]="!imageLoaded"
+          (load)="imageLoaded = true"
+        >
+        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent p-4">
+          <p class="text-white text-sm font-medium tracking-wide">{{ event.date }}</p>
+        </div>
+      </div>
+      
+      <div class="p-6 space-y-4">
+        <h2 class="text-2xl font-bold text-gray-800 group-hover:text-blue-600 transition-colors duration-300">
+          {{ event.title }}
+        </h2>
+        
+        <div class="flex items-center text-gray-600">
+          <svg class="w-5 h-5 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+          </svg>
+          <span class="text-sm truncate">{{ event.location }}</span>
+        </div>
+        
+        <p class="text-gray-600 text-sm line-clamp-2">{{ event.description }}</p>
+        
+        <a
+          [routerLink]="['/event', event.id]"
+          class="block w-full text-center px-6 py-3 bg-blue-600 text-white rounded-lg transition-all duration-300 
+                 hover:bg-blue-700 active:bg-blue-800 font-medium shadow-md hover:shadow-lg
+                 transform hover:-translate-y-0.5"
+        >
+          View Details
+        </a>
+      </div>
     </div>
   </div>
 </div>

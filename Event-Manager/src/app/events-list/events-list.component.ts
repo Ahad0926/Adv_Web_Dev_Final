@@ -7,16 +7,17 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-events-list',
   standalone: true,
-  imports: [RouterLink,CommonModule,HttpClientModule],
+  imports: [RouterLink, CommonModule, HttpClientModule],
   templateUrl: './events-list.component.html',
-  styleUrls: ['./events-list.component.css'],
+  styleUrls: ['./events-list.component.css']
 })
 export class EventsListComponent implements OnInit {
   events: any[] = [];
+  imageLoaded = false;
   private eventService: EventService;
 
   constructor(private http: HttpClient) {
-    this.eventService = new EventService(http); // Create an instance of EventService
+    this.eventService = new EventService(http);
   }
 
   ngOnInit() {
@@ -30,5 +31,4 @@ export class EventsListComponent implements OnInit {
       },
     });
   }
-  
 }
