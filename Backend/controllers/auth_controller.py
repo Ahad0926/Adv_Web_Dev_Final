@@ -1,4 +1,4 @@
-from flask import Blueprint, request
+from flask import Blueprint, jsonify, request
 from services.auth_service import create_user, authenticate_user
 
 auth_bp = Blueprint('auth', __name__)
@@ -11,4 +11,15 @@ def signup():
 @auth_bp.route('/login', methods=['POST'])
 def login():
     data = request.get_json()
-    return authenticate_user(data)
+    token, user = authenticate_user(data)
+    if token:
+        return jsonify({
+            "token": token,
+            "user": {
+                "id": user.id,
+                "name": user.name,
+                "email": user.email,
+                "role": user.role
+            }
+        })
+    return jsonify({"message": "Invalid credentials"}), 401

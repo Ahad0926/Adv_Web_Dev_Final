@@ -5,6 +5,7 @@ import { EventsListComponent } from './events-list/events-list.component';
 import { EventDetailsComponent } from './event-details/event-details.component';
 import { CreateEventComponent } from './create-event/create-event.component';
 import { SignupComponent } from './signup/signup.component';
+import { ProfileComponent } from './profile/profile.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -14,4 +15,5 @@ export const routes: Routes = [
   { path: 'events-list', component: EventsListComponent },
   { path: 'event/:id', component: EventDetailsComponent },
   { path: 'create-event', component: CreateEventComponent },
+  { path: 'profile', component: ProfileComponent },
 ];

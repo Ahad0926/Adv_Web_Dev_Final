@@ -1,7 +1,8 @@
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, Injectable } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -10,25 +11,36 @@ import { Router } from '@angular/router';
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
+@Injectable({
+  providedIn: 'root',
+})
 export class LoginComponent {
   email: string = '';
   password: string = '';
+  payload: any;
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router, private userService: UserService) {}
 
   onSubmit(): void {
-    const payload = { email: this.email, password: this.password };
+    this.payload = { email: this.email, password: this.password };
+    this.login(this.payload);
+  }
 
-    this.http.post('http://127.0.0.1:5000/api/auth/login', payload).subscribe({
+  login(loginDetails: any): void{
+    this.http.post('http://127.0.0.1:5000/api/auth/login', loginDetails).subscribe({
       next: (response: any) => {
-        // Store the token in localStorage or sessionStorage
+        console.log('API Response:', response);
+
+        // Store the token in localStorage
         localStorage.setItem('token', response.token);
 
         // Optionally store user details or role
         localStorage.setItem('user', JSON.stringify(response.user));
+        this.userService.setLoginDetails(response.user, response.token);
+
 
         console.log('Login successful');
-        this.router.navigate(['/']); // Redirect to the homepage or dashboard
+        this.router.navigate(['/']); // Redirect to the homepage
       },
       error: (err) => {
         console.error(err);

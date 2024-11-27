@@ -1,3 +1,4 @@
+from flask_jwt_extended import create_access_token
 from models.user_model import User, db
 
 def create_user(data):
@@ -15,12 +16,8 @@ def create_user(data):
 
 
 def authenticate_user(data):
-    """Authenticate user and return a token."""
-    from flask_jwt_extended import create_access_token
-
     user = User.query.filter_by(email=data['email']).first()
-    if not user or not user.check_password(data['password']):
-        return {'message': 'Invalid email or password'}, 401
-
-    access_token = create_access_token(identity={'id': user.id, 'email': user.email})
-    return {'token': access_token}, 200
+    if user and user.check_password(data['password']):
+        token = create_access_token(user.id)
+        return token, user
+    return None, None
