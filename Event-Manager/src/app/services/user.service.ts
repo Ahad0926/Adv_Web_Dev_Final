@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -6,12 +7,14 @@ import { Injectable } from '@angular/core';
 export class UserService {
   private currentUser: any = null; // Variable to store user details
   private token: string | null = null; // Variable to store token
+  public isLoggedIn$ = new BehaviorSubject<boolean>(false); // Observable for login state
 
   constructor() {
     // Initialize the user and token from localStorage when the service is created
     this.token = localStorage.getItem('token');
     const userString = localStorage.getItem('user');
     this.currentUser = userString ? JSON.parse(userString) : null;
+    this.isLoggedIn$.next(!!this.token)
   }
 
   // Retrieve the logged-in user
@@ -42,6 +45,7 @@ export class UserService {
     // Persist to localStorage
     localStorage.setItem('user', JSON.stringify(user));
     localStorage.setItem('token', token);
+    this.isLoggedIn$.next(true);
     console.log("Current User: ", this.currentUser);
   }
 
@@ -53,5 +57,7 @@ export class UserService {
     // Clear localStorage
     localStorage.removeItem('token');
     localStorage.removeItem('user');
+    this.isLoggedIn$.next(false);
+    console.log("Current User: ", this.currentUser);
   }
 }
