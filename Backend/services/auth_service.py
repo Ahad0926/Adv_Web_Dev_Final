@@ -18,6 +18,6 @@ def create_user(data):
 def authenticate_user(data):
     user = User.query.filter_by(email=data['email']).first()
     if user and user.check_password(data['password']):
-        token = create_access_token(user.id)
+        token = create_access_token(identity=str(user.id))
         return token, user
     return None, None
