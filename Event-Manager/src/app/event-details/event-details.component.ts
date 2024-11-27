@@ -1,55 +1,37 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
+import { EventService } from '../services/event.service';
 
 @Component({
   selector: 'app-event-details',
   standalone: true,
-  imports: [CommonModule],
+  imports: [HttpClientModule, CommonModule],
   templateUrl: './event-details.component.html',
-  styleUrl: './event-details.component.css'
+  styleUrls: ['./event-details.component.css'],
 })
 export class EventDetailsComponent implements OnInit {
   event: any;
+  eventService: EventService;
 
-  // Mock event data (replace this with a backend API call)
-  mockEvents = [
-    {
-      id: 1,
-      title: 'Tech Conference 2024',
-      date: 'Nov 30, 2024',
-      location: 'Oshawa, ON',
-      description: 'Join industry leaders for a day of tech talks and networking.',
-      organizer: 'John Doe',
-      ticketPrice: 100,
-      image: 'https://via.placeholder.com/300x200',
-    },
-    {
-      id: 2,
-      title: 'Music Festival',
-      date: 'Dec 1, 2024',
-      location: 'Toronto, ON',
-      description: 'Experience live music from top artists in a vibrant outdoor setting.',
-      organizer: 'Jane Smith',
-      ticketPrice: 75,
-      image: 'https://via.placeholder.com/300x200',
-    },
-    {
-      id: 3,
-      title: 'Art Workshop',
-      date: 'Dec 2, 2024',
-      location: 'Oshawa, ON',
-      description: 'A hands-on workshop for art enthusiasts of all skill levels.',
-      image: 'https://via.placeholder.com/300x200',
-    },
-  ];
-
-  constructor(private route: ActivatedRoute) {}
+  constructor(private route: ActivatedRoute, private http: HttpClient) {
+    // Create the EventService instance manually
+    this.eventService = new EventService(http);
+  }
 
   ngOnInit(): void {
-    // Get the event ID from the route
-    const eventId = +this.route.snapshot.paramMap.get('id')!;
-    // Fetch event data based on the ID
-    this.event = this.mockEvents.find((e) => e.id === eventId);
+    const eventId = this.route.snapshot.paramMap.get('id');
+    if (eventId) {
+      this.eventService.getEventById(eventId).subscribe({
+        next: (data) => {
+          console.log('Event details fetched:', data);
+          this.event = data;
+        },
+        error: (err) => {
+          console.error('Error fetching event details:', err);
+        },
+      });
+    }
   }
 }
