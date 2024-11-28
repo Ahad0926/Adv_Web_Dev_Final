@@ -24,7 +24,7 @@ def get_all_events_route():
 def get_event_route(event_id):
     event = get_event_by_id(event_id)
     if event:
-        return jsonify(event.to_dict())
+        return jsonify(event)
     return jsonify({'message': 'Event not found'}), 404
 
 @event_bp.route('/<int:event_id>', methods=['PUT'])

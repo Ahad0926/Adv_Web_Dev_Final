@@ -26,12 +26,36 @@ export class EventDetailsComponent implements OnInit {
       this.eventService.getEventById(eventId).subscribe({
         next: (data) => {
           console.log('Event details fetched:', data);
-          this.event = data;
+
+          // Format the event date and reassign it
+          this.event = {
+            ...data,
+            formattedDate: this.formatEventDate(data.start_date, data.end_date),
+          };
         },
         error: (err) => {
           console.error('Error fetching event details:', err);
         },
       });
     }
+  }
+
+  formatEventDate(startDate: string, endDate: string): string {
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+
+    // Format date: Month day · StartTime - EndTime
+    const options = { month: 'long', day: 'numeric' } as const;
+    const startDateStr = start.toLocaleDateString(undefined, options);
+    const startTimeStr = start.toLocaleTimeString(undefined, {
+      hour: 'numeric',
+      minute: 'numeric',
+    });
+    const endTimeStr = end.toLocaleTimeString(undefined, {
+      hour: 'numeric',
+      minute: 'numeric',
+    });
+
+    return `${startDateStr} · ${startTimeStr} - ${endTimeStr}`;
   }
 }

@@ -29,6 +29,7 @@ class Event(db.Model):
             "end_date": self.end_date.isoformat(),      # Convert datetime to string
             "location": self.location,
             "organizer_id": self.organizer_id,
+            "organizer_name": self.organizer.name if self.organizer else None,  # Add organizer's name
             "created_at": self.created_at.isoformat() if self.created_at else None,
             "ticket_price": self.ticket_price,
             "total_tickets": self.total_tickets,
