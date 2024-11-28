@@ -6,6 +6,7 @@ import { EventDetailsComponent } from './event-details/event-details.component';
 import { CreateEventComponent } from './create-event/create-event.component';
 import { SignupComponent } from './signup/signup.component';
 import { ProfileComponent } from './profile/profile.component';
+import { AuthGuard } from './auth.guard';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -14,6 +15,6 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'events-list', component: EventsListComponent },
   { path: 'event/:id', component: EventDetailsComponent },
-  { path: 'create-event', component: CreateEventComponent },
-  { path: 'profile', component: ProfileComponent },
+  { path: 'create-event', component: CreateEventComponent, canActivate: [AuthGuard] },
+  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
 ];
