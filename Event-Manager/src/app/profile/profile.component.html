@@ -1,13 +1,29 @@
 <div class="flex gap-8 p-6">
+  <!-- User Info Section -->
   <div class="flex-1 bg-gray-50 p-6 rounded-lg shadow">
-    <h2 class="text-xl font-semibold mb-4">Account Email</h2>
+    <h2 class="text-xl font-semibold mb-4">Account Information</h2>
+    <p><strong>Name:</strong> {{ user?.name }}</p>
+    <p><strong>Email:</strong> {{ user?.email }}</p>
   </div>
-  
-  <div class="flex-1 bg-gray-50 p-6 rounded-lg shadow">
-    <h2 class="text-xl font-semibold mb-4">Tickets Purchased</h2>
-  </div>
-  
+
+  <!-- Events Created Section -->
   <div class="flex-1 bg-gray-50 p-6 rounded-lg shadow">
     <h2 class="text-xl font-semibold mb-4">Events Created</h2>
+    <div *ngIf="user?.organized_events?.length; else noEvents">
+      <ul class="list-disc pl-5">
+        <li *ngFor="let event of user.organized_events">
+          <strong>{{ event.title }}</strong> - {{ event.start_date | date: 'mediumDate' }}
+        </li>
+      </ul>
+    </div>
+    <ng-template #noEvents>
+      <p>No events created yet.</p>
+    </ng-template>
+  </div>
+
+  <!-- Placeholder for Tickets Purchased -->
+  <div class="flex-1 bg-gray-50 p-6 rounded-lg shadow">
+    <h2 class="text-xl font-semibold mb-4">Tickets Purchased</h2>
+    <p>Coming soon...</p>
   </div>
 </div>

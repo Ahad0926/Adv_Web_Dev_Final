@@ -11,7 +11,7 @@
         <li *ngIf="isLoggedIn"><a routerLink="/create-event" class="py-2 px-3 hover:text-blue-400">Create Event</a></li>
         <li *ngIf="!isLoggedIn"><a routerLink="/signup" class="py-2 px-3 hover:text-blue-400">Signup</a></li>
         <li *ngIf="!isLoggedIn"><a routerLink="/login" class="py-2 px-3 hover:text-blue-400">Login</a></li>
-        <li *ngIf="isLoggedIn"><a routerLink="/profile" class="py-2 px-3 hover:text-blue-400">Profile</a></li>
+        <!-- <li *ngIf="isLoggedIn"><a routerLink="/profile" class="py-2 px-3 hover:text-blue-400">Profile</a></li> -->
         <li *ngIf="isLoggedIn"><a (click)="logout()" class="py-2 px-3 hover:text-blue-400 cursor-pointer">Logout</a></li>
       </ul>
     </div>

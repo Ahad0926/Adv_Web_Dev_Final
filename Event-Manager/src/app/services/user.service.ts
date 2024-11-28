@@ -49,6 +49,8 @@ export class UserService {
     console.log("Current User: ", this.currentUser);
   }
 
+  
+
   // Log out the user
   logout(): void {
     this.currentUser = null;

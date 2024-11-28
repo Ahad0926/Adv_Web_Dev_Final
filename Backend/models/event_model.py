@@ -17,8 +17,6 @@ class Event(db.Model):
     total_tickets = db.Column(db.Integer, nullable=False, default=0)
     remaining_tickets = db.Column(db.Integer, nullable=False, default=0)
 
-    organizer = db.relationship('User', backref=db.backref('events', lazy=True))
-
 
     def to_dict(self):
         return {
