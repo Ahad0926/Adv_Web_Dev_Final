@@ -1,43 +1,76 @@
-# Advanced Web Dev Final Project
-
-## Project Overview
-This project is an **Event Management System** enabling users to organize, manage, and attend events like concerts and conferences. The application supports ticket sales, attendee management, and calendar integration. The primary goals are to implement a modern, secure, and responsive web application, adhering to best practices in API design, authentication, deployment, and performance optimization.
+# Event Management System Project
 
 ### Group Members
 - Ahad Abdul (100787992)
 - Razeen Meera Ameer (100846286)
 ---
 
-## Technology Stack
+## Overview
+This Event Management System project is designed to facilitate event creation, user authentication, and event viewing through a Flask backend and Angular frontend. While the project remains incomplete, significant progress has been made, especially in the core functionalities such as user management, event creation, and integration of the frontend with the backend.
 
-### 1. **Backend Framework: Flask (Python)**
-   - **Purpose**: The Flask backend handles core business logic, including user authentication, API routes, and database management.
-   - **Libraries & Tools**:
-     - **Flask-OAuth**: Provides secure user authentication and authorization.
-     - **SQLAlchemy**: ORM for database interactions and managing data relationships.
+### To run the project:
+1. Navigate to `/Event-manager` and execute `ng serve` for the Angular frontend.
+2. Navigate to `/Backend` and execute `flask run` for the Flask backend.
 
-### 2. **Frontend Framework: Angular**
-   - **Purpose**: Angular is used to create a responsive, interactive UI, allowing users to manage and view events easily.
-   - **Tools & Libraries**:
-     - **Angular CLI**: For project scaffolding and build management.
-     - **Angular Router**: Enables Single Page Application (SPA) functionality.
+---
 
-### 3. **Database: SQLite**
-   - **Purpose**: SQLite is used to store user data, events, and ticket details in a simple, relational structure, ideal for a project of this scale.
+## Completed Features
 
-### 4. **Deployment & DevOps**
+### **API Design and Integration**
+- **Clear API Endpoints**:
+  - `/api/auth/signup`: Handles user registration.
+  - `/api/auth/login`: Manages user authentication and JWT token generation.
+  - `/api/auth/logout`: Manages user logout and session clearing.
+  - `/api/events`: Handles event creation and retrieval.
+- **HTTP Methods**:
+  - `POST` for creating users and events.
+  - `GET` for fetching events and user details.
 
-   - **Platform**: **Heroku**
-     - Heroku manages deployment, providing scalable server environments and built-in HTTPS support.
+---
 
-   - **Containerization**: **Docker**
-     - Docker is used to containerize both the Flask backend and Angular frontend, ensuring consistency between development and production environments.
+### **Architectural Design**
+- **Monolithic Architecture**: A monolithic structure was implemented, with Flask managing the backend API and Angular managing the frontend.
+- **Separation of Concerns**: Backend handles API logic, authentication, and database interactions. The frontend is focused on user experience.
 
-   - **Version Control**: **GitHub**
-     - GitHub manages source code, collaboration, and CI/CD workflows, with commits and branches used for team development and progress tracking.
-    
-### How to Run the Project
+---
 
-1. **Frontend**:  
-   Navigate to the `Event-Manager` directory and run the following command in your terminal:  
-   `ng serve`
+### **Authentication and Security**
+- **User Authentication**:
+  - JWT is used for secure session handling.
+  - Sensitive routes, such as event creation and user profile access, are protected with `@jwt_required`.
+- **Frontend Authorization**: Angular's AuthGuard ensures unauthorized users are redirected to the login page when accessing protected routes.
+
+---
+
+### **Database Design and ORM**
+- **Database Schema**:
+  - `Users`, `Events`, and `Tickets` models were implemented.
+  - Relationships between users and events (`organized_events`) and users and tickets (`tickets`) were designed.
+- **ORM Usage**: SQLAlchemy ORM was used for database interactions.
+- **CRUD Operations**:
+  - Creating and retrieving events.
+  - Creating users and managing authentication.
+
+
+---
+
+### **Version Control and Collaboration**
+- **Git and GitHub**:
+  - The project was version-controlled using Git.
+  - Commits were made regularly with clear messages describing changes.
+
+
+---
+
+## Key Features
+
+### **User Management**
+- Secure user registration, login, and logout functionalities with JWT-based authentication.
+
+### **Event Management**
+- Users can create events with details such as title, date, location, and tickets.
+- Events can be viewed on a public list or detailed page.
+
+### **Frontend Integration**
+- Angular was used to create a responsive and user-friendly interface for event viewing and management.
+- Protected routes for creating events and viewing profiles ensure secure access.
