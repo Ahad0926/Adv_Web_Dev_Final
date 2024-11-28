@@ -13,16 +13,24 @@ class Event(db.Model):
     organizer_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
+    ticket_price = db.Column(db.Float, nullable=True, default=0.0)  # Allow free events by default
+    total_tickets = db.Column(db.Integer, nullable=False, default=0)
+    remaining_tickets = db.Column(db.Integer, nullable=False, default=0)
+
     organizer = db.relationship('User', backref=db.backref('events', lazy=True))
 
+
     def to_dict(self):
-       return {
-           "id": self.id,
-           "title": self.title,
-           "description": self.description,
-           "start_date": self.start_date.isoformat(),  # Convert datetime to string
-           "end_date": self.end_date.isoformat(),      # Convert datetime to string
-           "location": self.location,
-           "organizer_id": self.organizer_id,
-           "created_at": self.created_at.isoformat() if self.created_at else None
-       }
+        return {
+            "id": self.id,
+            "title": self.title,
+            "description": self.description,
+            "start_date": self.start_date.isoformat(),  # Convert datetime to string
+            "end_date": self.end_date.isoformat(),      # Convert datetime to string
+            "location": self.location,
+            "organizer_id": self.organizer_id,
+            "created_at": self.created_at.isoformat() if self.created_at else None,
+            "ticket_price": self.ticket_price,
+            "total_tickets": self.total_tickets,
+            "remaining_tickets": self.remaining_tickets
+        }
