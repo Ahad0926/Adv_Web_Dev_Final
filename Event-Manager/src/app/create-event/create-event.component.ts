@@ -1,18 +1,19 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { EventService } from '../services/event.service';
 
 @Component({
   selector: 'app-create-event',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, HttpClientModule],
   templateUrl: './create-event.component.html',
-  styleUrl: './create-event.component.css'
+  styleUrls: ['./create-event.component.css']
 })
 export class CreateEventComponent {
   event = {
-    //id organizer_id, and created_at
     title: '',
     start_date: '',
     start_time: '',
@@ -26,8 +27,10 @@ export class CreateEventComponent {
 
   timeOptions: string[] = [];
   filteredEndTimeOptions: string[] = [];
+  private eventService: EventService;
 
-  constructor(private router: Router) {
+  constructor(private http: HttpClient, private router: Router) {
+    this.eventService = new EventService(http);
     this.initializeTimeOptions();
   }
 
@@ -46,13 +49,11 @@ export class CreateEventComponent {
   }
 
   updateEndTimeOptions() {
-    // Ensure the end time options start from the selected start time
     const startIndex = this.timeOptions.indexOf(this.event.start_time);
     this.filteredEndTimeOptions = this.timeOptions.slice(startIndex + 1);
   }
 
   onSubmit() {
-    // Validate the end time is after the start time
     if (
       this.event.start_date === this.event.end_date &&
       this.event.start_time >= this.event.end_time
@@ -60,9 +61,26 @@ export class CreateEventComponent {
       alert('End time must be after the start time.');
       return;
     }
+    
+    const eventPayload = {
+      title: this.event.title,
+      description: this.event.description,
+      start_date: `${this.event.start_date}T${this.event.start_time}:00`,
+      end_date: `${this.event.end_date}T${this.event.end_time}:00`,
+      location: this.event.location,
+      ticket_price: this.event.ticket_price,
+      total_tickets: this.event.total_tickets,
+    };
 
-    console.log('Event data:', this.event);
-    // Placeholder: Send the event data to the backend API
-    this.router.navigate(['/events-list']);
+    this.eventService.createEvent(eventPayload).subscribe({
+      next: (response) => {
+        console.log('Event created successfully:', response);
+        this.router.navigate(['/events-list']);
+      },
+      error: (err) => {
+        console.error('Error creating event:', err);
+        alert('Error creating event. Please try again.');
+      },
+    });
   }
 }

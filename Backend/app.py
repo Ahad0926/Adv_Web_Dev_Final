@@ -11,7 +11,8 @@ from controllers.event_controller import event_bp
 app = Flask(__name__)
 
 # Enable CORS for all routes
-CORS(app)
+CORS(app, resources={r"/*": {"origins": "http://localhost:4200"}}, supports_credentials=True)
+app.url_map.strict_slashes = False
 
 # Configure the app
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'

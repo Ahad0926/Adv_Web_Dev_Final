@@ -1,4 +1,4 @@
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule, HttpHeaders } from '@angular/common/http';
 
 
 export class EventService {
@@ -12,5 +12,13 @@ export class EventService {
 
   getEventById(id: string) {
     return this.http.get<any>(`${this.baseUrl}/${id}`);
+  }
+
+  createEvent(eventData: any) {
+    const headers = {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('token')}`,
+    };
+    return this.http.post(`${this.baseUrl}`, eventData, { headers });
   }
 }
